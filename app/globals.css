@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-gray-900;
+  }
+
+  ::selection {
+    @apply bg-brand-100 text-brand-900;
+  }
+}
+
+@layer components {
+  /* Article content prose styling */
+  .article-content {
+    @apply text-gray-700 leading-relaxed;
+  }
+
+  .article-content h2 {
+    @apply text-2xl font-heading font-semibold text-gray-900 mt-8 mb-4;
+  }
+
+  .article-content h3 {
+    @apply text-xl font-heading font-semibold text-gray-800 mt-6 mb-3;
+  }
+
+  .article-content p {
+    @apply mb-4 text-base leading-7;
+  }
+
+  .article-content a {
+    @apply text-brand-600 hover:text-brand-700 underline underline-offset-2;
+  }
+
+  .article-content ul,
+  .article-content ol {
+    @apply mb-4 pl-6;
+  }
+
+  .article-content li {
+    @apply mb-2;
+  }
+
+  .article-content blockquote {
+    @apply border-l-4 border-brand-200 pl-4 italic text-gray-600 my-6;
+  }
+
+  .article-content img {
+    @apply rounded-lg my-6 w-full;
+  }
+
+  .article-content pre {
+    @apply bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto my-6 text-sm;
+  }
+
+  .article-content code {
+    @apply bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm;
+  }
+
+  .article-content pre code {
+    @apply bg-transparent text-gray-100 p-0;
+  }
+}
+
+@layer utilities {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

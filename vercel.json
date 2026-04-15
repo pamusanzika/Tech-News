@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "public/fonts/**"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/index.js" }
+  ]
+}

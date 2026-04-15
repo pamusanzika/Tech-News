@@ -1,0 +1,41 @@
+{
+  "name": "tech-news",
+  "version": "2.0.0",
+  "description": "AlphaTech Wire - Latest Technology News & Insights",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "api": "nodemon api/index.js"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "@fontsource/nunito": "^5.2.7",
+    "@next/third-parties": "^16.2.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "framer-motion": "^11.18.0",
+    "mongoose": "^9.4.1",
+    "next": "^15.3.1",
+    "node-fetch": "^3.3.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sharp": "^0.34.5",
+    "slugify": "^1.6.9",
+    "text-to-svg": "^3.1.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "autoprefixer": "^10.4.21",
+    "nodemon": "^3.1.14",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3"
+  }
+}

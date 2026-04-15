@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article | AlphaTech Wire</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gray-900 border-b border-gray-800 px-6 py-4">
+    <div class="max-w-4xl mx-auto flex items-center gap-4">
+      <a href="/" class="text-blue-400 hover:text-blue-300 text-sm">← Back</a>
+      <h1 class="text-xl font-bold text-blue-400">⚡ TechPulse</h1>
+    </div>
+  </header>
+
+  <!-- Article -->
+  <main class="max-w-4xl mx-auto px-6 py-10">
+    <div id="article">
+      <div class="text-center text-gray-500 py-20">Loading article...</div>
+    </div>
+  </main>
+
+  <script>
+    async function loadArticle() {
+      const slug = window.location.pathname.split('/article/')[1];
+
+      try {
+        const res = await fetch(`/api/articles/${slug}`);
+        const article = await res.json();
+
+        if (article.error) {
+          document.getElementById('article').innerHTML = 
+            '<div class="text-center text-red-400 py-20">Article not found.</div>';
+          return;
+        }
+
+        // Update page title
+        document.title = `${article.title} | TechPulse`;
+
+        document.getElementById('article').innerHTML = `
+          <span class="text-xs text-blue-400 font-medium uppercase tracking-wider">${article.category}</span>
+          <h1 class="text-3xl font-bold text-white mt-3 mb-4 leading-tight">${article.title}</h1>
+          <div class="text-gray-500 text-sm mb-8">
+            ${new Date(article.published_at).toLocaleDateString('en-US', { 
+              weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' 
+            })}
+          </div>
+          <div class="prose prose-invert max-w-none text-gray-300 text-lg leading-relaxed mb-10">
+            ${article.content}
+          </div>
+        `;
+
+      } catch (err) {
+        document.getElementById('article').innerHTML = 
+          '<div class="text-center text-red-400 py-20">Error loading article.</div>';
+      }
+    }
+
+    loadArticle();
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech News</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gray-900 border-b border-gray-800 px-6 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-blue-400">⚡ TechPulse</h1>
+      <span class="text-gray-400 text-sm">Latest Tech News</span>
+    </div>
+  </header>
+
+  <!-- Articles Grid -->
+  <main class="max-w-6xl mx-auto px-6 py-10">
+    <h2 class="text-xl font-semibold text-gray-300 mb-6">Latest Articles</h2>
+    <div id="articles" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Loading -->
+      <div class="col-span-3 text-center text-gray-500 py-20">
+        Loading latest tech news...
+      </div>
+    </div>
+  </main>
+
+  <script>
+    async function loadArticles() {
+      try {
+        const res = await fetch('/api/articles');
+        const articles = await res.json();
+
+        const container = document.getElementById('articles');
+
+        if (!articles.length) {
+          container.innerHTML = '<div class="col-span-3 text-center text-gray-500 py-20">No articles yet.</div>';
+          return;
+        }
+
+        container.innerHTML = articles.map(article => `
+          <a href="/article/${article.slug}" class="block bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-blue-500 transition-all duration-200 cursor-pointer">
+            <span class="text-xs text-blue-400 font-medium uppercase tracking-wider">${article.category}</span>
+            <h3 class="text-white font-semibold text-lg mt-2 mb-3 leading-snug line-clamp-2">${article.title}</h3>
+            <p class="text-gray-400 text-sm line-clamp-3">${article.content?.slice(0, 150)}...</p>
+            <div class="mt-4 text-xs text-gray-600">
+              ${new Date(article.published_at).toLocaleDateString('en-US', { 
+                month: 'short', day: 'numeric', year: 'numeric' 
+              })}
+            </div>
+          </a>
+        `).join('');
+
+      } catch (err) {
+        document.getElementById('articles').innerHTML = 
+          '<div class="col-span-3 text-center text-red-400 py-20">Error loading articles.</div>';
+      }
+    }
+
+    loadArticles();
+  </script>
+</body>
+</html>
