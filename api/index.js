@@ -106,7 +106,9 @@ app.post('/api/admin/login', async (req, res) => {
     if (email !== process.env.ADMIN_EMAIL) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-    const valid = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH);
+    // Decode base64-encoded hash (avoids $ escaping issues in env vars)
+    const passwordHash = Buffer.from(process.env.ADMIN_PASSWORD_HASH, 'base64').toString('utf-8');
+    const valid = await bcrypt.compare(password, passwordHash);
     if (!valid) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
