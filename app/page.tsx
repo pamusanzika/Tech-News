@@ -1,4 +1,4 @@
-import { getArticles } from "@/lib/api";
+import { getArticles, getFeaturedArticles, getPopularArticles } from "@/lib/api";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import FeaturedArticle from "@/components/FeaturedArticle";
 import ArticleGrid from "@/components/ArticleGrid";
@@ -12,9 +12,13 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const { articles, total } = await getArticles(11);
-  const featured = articles[0];
-  const latest = articles.slice(1);
+  const [{ articles, total }, featuredArticles, popularArticles] =
+    await Promise.all([getArticles(11), getFeaturedArticles(), getPopularArticles()]);
+
+  // Use the first featured-flagged article for the hero, or fall back to latest
+  const featured = featuredArticles[0] || articles[0];
+  const featuredId = featured?._id;
+  const latest = articles.filter((a) => a._id !== featuredId).slice(0, 10);
 
   // JSON-LD structured data for the homepage
   const jsonLd = {
@@ -72,7 +76,7 @@ export default async function HomePage() {
 
           {/* Sidebar */}
           <aside className="lg:col-span-1">
-            <Sidebar articles={articles} />
+            <Sidebar articles={articles} popularArticles={popularArticles} />
           </aside>
         </div>
 

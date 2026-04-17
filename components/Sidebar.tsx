@@ -11,8 +11,16 @@ function formatDate(dateStr: string): string {
   });
 }
 
-export default function Sidebar({ articles }: { articles: Article[] }) {
-  const popular = articles.slice(0, 5);
+export default function Sidebar({
+  articles,
+  popularArticles = [],
+}: {
+  articles: Article[];
+  popularArticles?: Article[];
+}) {
+  // Use admin-selected popular articles if available, otherwise fall back to first 5
+  const popular =
+    popularArticles.length > 0 ? popularArticles.slice(0, 5) : articles.slice(0, 5);
 
   return (
     <aside className="space-y-8">

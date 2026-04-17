@@ -33,6 +33,8 @@ function cleanArticle(article: Article): Article {
 function getBaseUrl(): string {
   // Server-side: use absolute URL
   if (typeof window === "undefined") {
+    // In development, always use localhost so we hit the local API
+    if (process.env.NODE_ENV === "development") return "http://localhost:3000";
     if (process.env.SITE_URL) return process.env.SITE_URL;
     if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
     return "http://localhost:3000";
@@ -51,7 +53,7 @@ export async function getArticles(
 
   const res = await fetch(
     `${getBaseUrl()}/api/articles?${params.toString()}`,
-    { next: { revalidate: 60 } }
+    { cache: "no-store" }
   );
   if (!res.ok) throw new Error("Failed to fetch articles");
   const data = await res.json();
@@ -64,6 +66,24 @@ export async function getArticles(
     articles: data.articles.map(cleanArticle),
     total: data.total,
   };
+}
+
+export async function getFeaturedArticles(): Promise<Article[]> {
+  const res = await fetch(`${getBaseUrl()}/api/articles/filter/featured`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.map(cleanArticle);
+}
+
+export async function getPopularArticles(): Promise<Article[]> {
+  const res = await fetch(`${getBaseUrl()}/api/articles/filter/popular`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.map(cleanArticle);
 }
 
 export async function getArticle(slug: string): Promise<Article | null> {

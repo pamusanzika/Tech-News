@@ -7,4 +7,6 @@ export interface Article {
   slug: string;
   published_at: string;
   category: string;
+  featured?: boolean;
+  popular?: boolean;
 }
