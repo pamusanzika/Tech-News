@@ -269,8 +269,9 @@ export default function AboutPage() {
               <h2 id="contact">Contact the Newsroom</h2>
               <p>
                 Story tips, press releases, and feedback are always welcome.
-                Reach our editorial team through the channels linked in the
-                footer. For privacy and data requests, see our{" "}
+                Reach our editorial team at{" "}
+                <a href="mailto:info@alphatechwire.com">info@alphatechwire.com</a>.
+                For privacy and data requests, see our{" "}
                 <Link href="/privacy">Privacy Policy</Link>.
               </p>
             </section>

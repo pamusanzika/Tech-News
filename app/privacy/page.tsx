@@ -298,10 +298,9 @@ export default function PrivacyPage() {
               <h2 id="contact">11. Contact Us</h2>
               <p>
                 If you have questions about this Privacy Policy or wish to
-                exercise your rights, please reach out via the channels listed
-                on our{" "}
-                <Link href="/about">About page</Link>. We aim to respond to all
-                valid requests within 30 days.
+                exercise your rights, please contact us at{" "}
+                <a href="mailto:info@alphatechwire.com">info@alphatechwire.com</a>.
+                We aim to respond to all valid requests within 30 days.
               </p>
             </section>
           </AnimateIn>
